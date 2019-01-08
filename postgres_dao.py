@@ -16,6 +16,10 @@ class Postgres_dao:
         for row in self.cursor:
             print(row)
 
+    def select_by_id(self, friend_id):
+        self.cursor.execute('SELECT * FROM actions WHERE uid = %s', [friend_id])
+        self.print_all()
+
     def insert_action(self, action=None):
         try:
             string = 'INSERT INTO actions(uid, first_name, last_name, time1) VALUES({}, \"{}\" , \"{}\", {});'.format(action.uid, action.first_name, action.last_name, action.time)
@@ -41,5 +45,5 @@ class Action:
 
 pd = Postgres_dao()
 #pd.insert_action(Action(1, 'vidma', 'borisovna', 228))
-pd.truncate()
+# pd.truncate()
 pd.select_all()

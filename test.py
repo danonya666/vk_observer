@@ -1,11 +1,15 @@
-import datetime
-import requests
-import vk
-import vk.utils
 import time
-import winsound
-from Spectator import *
+
+import datetime
+
+from Spectator import to_integer, Spectator
+from analyzer import Analyzer
+# from main import vk_api
+import vk.utils
+
 from keys import session_key
+from obervant import Observant
+from postgres_dao import Postgres_dao
 
 session = vk.Session(session_key)
 vk_api = vk.API(session)
@@ -63,5 +67,10 @@ spec = Spectator(info=user[0], logging=True)
 
 """
 spec.spectate_friends(Observant(user[0], friends))
-print(spec)
-spec.start_polling(vk_api)
+analyzer = Analyzer(spec)
+print(analyzer.friends_ids)
+pd = Postgres_dao()
+for friend_id in analyzer.friends_ids:
+    print('fid = {}'.format(friend_id))
+    pd.select_by_id(friend_id)
+    pd.print_all()
