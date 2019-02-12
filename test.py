@@ -68,9 +68,15 @@ spec = Spectator(info=user[0], logging=True)
 """
 spec.spectate_friends(Observant(user[0], friends))
 analyzer = Analyzer(spec)
-print(analyzer.friends_ids)
+# print("Friends list of {}".format(analyzer.myself))
+# print(analyzer.friends_ids)
 pd = Postgres_dao()
-for friend_id in analyzer.friends_ids:
-    print('fid = {}'.format(friend_id))
-    pd.select_by_id(friend_id)
-    pd.print_all()
+print("Connected to dao {}".format(pd))
+# for friend_id in analyzer.friends_ids:
+#     print('fid = {}'.format(friend_id))
+#     pd.select_by_id(friend_id)
+#     pd.print_all()
+print("before select_all")
+a = analyzer.get_friends_actions()
+for action in a:
+    print(action)
