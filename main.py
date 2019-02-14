@@ -1,11 +1,6 @@
-import datetime
-import requests
-import vk
 import vk.utils
-import time
-import winsound
-from Spectator import *
-from keys import session_key
+from get_info.spectator import *
+from static.keys import session_key
 
 session = vk.Session(session_key)
 vk_api = vk.API(session)
