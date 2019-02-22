@@ -1,15 +1,13 @@
-import time
-
 import datetime
 
-from Spectator import to_integer, Spectator
-from analyzer import Analyzer
+from get_info.spectator import Spectator
+from processing.analyzer import Analyzer
 # from main import vk_api
 import vk.utils
 
-from keys import session_key
-from obervant import Observant
-from postgres_dao import Postgres_dao
+from static.keys import session_key
+from get_info.observant import Observant
+from db.postgres_dao import Postgres_dao
 
 session = vk.Session(session_key)
 vk_api = vk.API(session)
@@ -80,3 +78,4 @@ print("before select_all")
 a = analyzer.get_friends_actions()
 for action in a:
     print(action)
+print(analyzer.day_activity())
