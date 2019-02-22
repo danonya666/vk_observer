@@ -57,10 +57,9 @@ class Spectator:
                 self.actions_log(len(upd_obses))
                 for i in upd_obses:
                     update_log(i)
-                    # print('i: {}', i.info)
                     action = Action(i.info['uid'], i.info['first_name'], i.info['last_name'], int(time.time()))
                     print(action)
-                    self.dao.insert_action(action)
+                    self.dal.insert_action(action)
                 diff = []
                 for i in self.info_list:
                     diff.append(int(time.time()) - i.info['last_seen']['time'])

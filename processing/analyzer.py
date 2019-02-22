@@ -29,23 +29,34 @@ class Analyzer:
             actions += self.dal.get_user_actions(friend)
         return actions
 
-    def day_activity(self, actions=None) -> dict:
-        hour_activity = dict.fromkeys([i for i in range(24)], 0)
+    def some_period_activity_by_hours(self, period, actions=None) -> dict:  # Period in hours
+        """How many actions were made by a user during some period"""
+        hour_activity = dict.fromkeys([i for i in range(period)], 0)
         if actions is None:
             actions = self.myself.actions
         for action in actions:
             dt_time = datetime.fromtimestamp(action.time)
-            if dt_time.date() == datetime.today().date():
-                hour_activity[dt_time.hour] += 1
+            diff = datetime.now() - dt_time
+            hour_diff = int(diff.total_seconds() / 3600)
+            if hour_diff < period:
+                hour_activity[hour_diff] += 1
         return hour_activity
 
-    def week_activity(self, actions: list) -> list:
+    def week_activity(self, actions=None) -> list:
         pass
 
     def month_activity(self, actions: list) -> list:
         pass
 
-    def some_period_activity(self, actions: list, period) -> list:
-        pass
-
-# def action_time(action):
+    def some_period_activity_by_days(self, period, actions=None) -> list:
+        day_activity = dict.fromkeys([i for i in range(period)], 0)
+        if actions is None:
+            actions = self.myself.actions
+        for action in actions:
+            dt_time = datetime.fromtimestamp(action.time)
+            today = datetime.today()
+            diff = datetime(today.year, today.month, today.day + 1, 0, 0) - dt_time
+            day_diff = int(diff.total_seconds() / 86400)
+            if day_diff < period:
+                day_activity[day_diff] += 1
+        return day_activity

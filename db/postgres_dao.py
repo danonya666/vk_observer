@@ -24,7 +24,7 @@ class Postgres_dao:
             actions.append(Action(uid=row[0], fn=row[2], ln=row[3], time=row[4], id=row[1]))
         return actions
 
-    def insert_action(self, action=None):
+    def insert_action(self, action):
         try:
             self.cursor.execute("INSERT INTO actions(uid, first_name, last_name, time1) VALUES (%s, %s, %s, %s)",
                                 (action.uid, action.first_name, action.last_name, action.time))
@@ -45,4 +45,4 @@ class Action:
         self.time = time
 
     def __str__(self):
-        return str(self.first_name + ' ' + self.last_name + ' ' + str(self.id) + ' ' + datetime.utcfromtimestamp(self.time).strftime('%Y-%m-%d %H:%M:%S') + ' ' + str(self.time)) + ' @Action'
+        return str(self.first_name + ' ' + self.last_name  + ' ' + datetime.utcfromtimestamp(self.time).strftime('%Y-%m-%d %H:%M:%S') + ' ' + str(self.time)) + ' @Action'

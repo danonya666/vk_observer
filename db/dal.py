@@ -8,3 +8,6 @@ class Dal:
     def get_user_actions(self, id: int) -> list:
         info = self.dao.select_by_id(id)
         return info
+
+    def insert_action(self, action=None):
+        self.dao.insert_action(action)
